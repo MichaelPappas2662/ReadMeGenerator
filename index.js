@@ -3,6 +3,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown.js');
 
+
 // TODO: Create an array of questions for user input
 const questions = [
     {
@@ -37,10 +38,10 @@ const questions = [
 
     },
     {
-        type: "input",
-        name: "licenses",
+        type: "list",
+        name: "license",
         message: "Enter licenses used for the project: ",
-        choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3',  'Apache License 2.0','BoostSoftware 1.0' , 'MIT License', 'Monzilla'],
+        choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3',  'Apache License 2.0','BoostSoftware 1.0' , 'MIT License', 'none'],
         
     },
     {
@@ -59,20 +60,21 @@ const questions = [
 
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
+    console.log(generateMarkdown(data));
     fs.writeFile(fileName, generateMarkdown(data), function (err) {
-        if (err) {
-            return console.log(err);
+       err
+          ? console.log(err)
+          : console.log('Your README file was created')
+         });
         }
-    });
-}
+
 
 
 // TODO: Create a function to initialize app
 function init() {
     inquirer.prompt(questions).then((data) => {
-        console.log(JSON.stringify(data, null, " "));
-        data.getLicense = getLicense(data.license);
-        writeToFile("./example/README.md", data);
+        console.log(`Generating README.md with ${data.title}`);
+        writeToFile('./example/README.md' , generateMarkdown(data));
     });
 }
 
