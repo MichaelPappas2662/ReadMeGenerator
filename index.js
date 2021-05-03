@@ -2,6 +2,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const { generateMarkdown } = require('./utils/generateMarkdown.js');
+const username = require("./utils/api");
 
 
 // TODO: Create an array of questions for user input
@@ -41,7 +42,13 @@ const questions = [
         type: "list",
         name: "license",
         message: "Enter licenses used for the project: ",
-        choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3',  'Apache License 2.0','BoostSoftware 1.0' , 'MIT License', 'none'],
+        choices: ["MIT",
+        "GNU GPL",
+        "Apache 2.0",
+        "Boost Software License 1.0",
+        "Mozilla",
+        "Open Software License 3.0",
+        "None",],
         
     },
     {
@@ -55,6 +62,10 @@ const questions = [
         name: "tests",
         message: "Provide tests for project, and explain how to test (if necessary) ",
         
+    }, {
+        type: "input",
+        name: "userEmail",
+        message: "Please enter your email "
     }
 ];
 
